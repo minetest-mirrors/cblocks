@@ -22,11 +22,6 @@ local colours = {
 	{"yellow",     "Yellow",     "#e3ff0070"},
 }
 
--- ethereal already has yellow wood so rename to yellow2
-if ethereal_mod then
-	colours[15] = {"yellow2", "Yellow", "#e3ff0070"}
-end
-
 
 local function cblocks_stairs(nodename, def)
 
@@ -82,24 +77,6 @@ end
 
 for i = 1, #colours, 1 do
 
--- wood
-
-cblocks_stairs("cblocks:wood_" .. colours[i][1], {
-	description = colours[i][2] .. " Wooden Planks",
-	tiles = {"default_wood.png^[colorize:" .. colours[i][3]},
-	paramtype = "light",
-	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
-	sounds = default.node_sound_wood_defaults(),
-})
-
-minetest.register_craft({
-	output = "cblocks:wood_".. colours[i][1] .. " 2",
-	recipe = {
-		{"group:wood","group:wood", "dye:" .. colours[i][1]},
-	}
-})
-
 -- stone brick
 
 cblocks_stairs("cblocks:stonebrick_" .. colours[i][1], {
@@ -152,6 +129,31 @@ minetest.register_craft({
 	output = "cblocks:glass_".. colours[i][1] .. " 2",
 	recipe = {
 		{"default:glass","default:glass", "dye:" .. colours[i][1]},
+	}
+})
+
+-- wood
+
+local col = colours[i][1]
+
+-- ethereal already has yellow wood so rename to yellow2
+if ethereal_mod then
+	col = "yellow2"
+end
+
+cblocks_stairs("cblocks:wood_" .. col, {
+	description = colours[i][2] .. " Wooden Planks",
+	tiles = {"default_wood.png^[colorize:" .. colours[i][3]},
+	paramtype = "light",
+	is_ground_content = false,
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
+	sounds = default.node_sound_wood_defaults(),
+})
+
+minetest.register_craft({
+	output = "cblocks:wood_".. col .. " 2",
+	recipe = {
+		{"group:wood","group:wood", "dye:" .. colours[i][1]},
 	}
 })
 
