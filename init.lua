@@ -75,6 +75,25 @@ local function cblocks_stairs(nodename, def)
 end
 
 
+local function set_alias(col, name)
+
+minetest.register_alias("stairs:stair_" .. col .. "_" .. name,
+		"stairs:stair_" .. name .. "_" .. col)
+
+minetest.register_alias("stairs:slab_" .. col .. "_" .. name,
+		"stairs:slab_" .. name .. "_" .. col)
+
+minetest.register_alias("stairs:stair_inner_" .. col .. "_" .. name,
+		"stairs:stair_inner_" .. name .. "_" .. col)
+
+minetest.register_alias("stairs:stair_outer_" .. col .. "_" .. name,
+		"stairs:stair_outer_" .. name .. "_" .. col)
+
+minetest.register_alias("stairs:slope_" .. col .. "_" .. name,
+		"stairs:slope_" .. name .. "_" .. col)
+end
+
+
 for i = 1, #colours, 1 do
 
 -- stone brick
@@ -111,6 +130,8 @@ if stairs_mod and stairs and stairs.mod and stairs.mod == "redo" then
 		groups = {cracky = 3, oddly_breakable_by_hand = 3},
 		sounds = default.node_sound_glass_defaults(),
 	})
+
+	set_alias(colours[i][1], "glass")
 else
 	minetest.register_node("cblocks:glass_" .. colours[i][1], {
 		description = colours[i][2] .. " Glass",
@@ -149,6 +170,8 @@ cblocks_stairs("cblocks:wood_" .. col, {
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
 	sounds = default.node_sound_wood_defaults(),
 })
+
+set_alias(colours[i][1], "wood")
 
 minetest.register_craft({
 	output = "cblocks:wood_".. col .. " 2",
