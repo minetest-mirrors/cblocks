@@ -137,7 +137,7 @@ minetest.register_craft({
 local col = colours[i][1]
 
 -- ethereal already has yellow wood so rename to yellow2
-if ethereal_mod then
+if ethereal_mod and col == "yellow" then
 	col = "yellow2"
 end
 
