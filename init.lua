@@ -1,4 +1,9 @@
 
+local stairs_mod = minetest.get_modpath("stairs")
+local stairsplus_mod = minetest.global_exists("stairsplus")
+local ethereal_mod = minetest.get_modpath("ethereal")
+
+
 local colours = {
 	{"black",      "Black",      "#000000b0"},
 	{"blue",       "Blue",       "#015dbb70"},
@@ -17,9 +22,11 @@ local colours = {
 	{"yellow",     "Yellow",     "#e3ff0070"},
 }
 
-local stairs_mod = minetest.get_modpath("stairs")
-local stairsplus_mod = minetest.get_modpath("moreblocks")
-	and minetest.global_exists("stairsplus")
+-- ethereal already has yellow wood so rename to yellow2
+if ethereal_mod then
+	colours[15] = {"yellow2", "Yellow", "#e3ff0070"}
+end
+
 
 local function cblocks_stairs(nodename, def)
 
@@ -48,17 +55,17 @@ local function cblocks_stairs(nodename, def)
 				groups = def.groups,
 				sounds = def.sounds,
 			})
---[[
-		elseif stairs_mod and stairs.mod then
+
+		elseif stairs_mod and stairs
+		and stairs.mod and stairs.mod == "redo" then
 
 			stairs.register_all(name, nodename,
 				def.groups,
 				def.tiles,
 				def.description,
-				def.sounds,
-				def.alpha
+				def.sounds
 			)
-]]
+
 		elseif stairs_mod and not stairs.mod then
 
 			stairs.register_stair_and_slab(name, nodename,
@@ -71,6 +78,7 @@ local function cblocks_stairs(nodename, def)
 		end
 	end
 end
+
 
 for i = 1, #colours, 1 do
 
@@ -110,19 +118,35 @@ minetest.register_craft({
 	}
 })
 
--- glass (no stairs because they dont support transparant nodes)
+-- glass (no stairs unless stairs redo active because default stairs mod
+-- does not support transparent stairs)
 
-minetest.register_node("cblocks:glass_" .. colours[i][1], {
-	description = colours[i][2] .. " Glass",
-	tiles = {"cblocks.png^[colorize:" .. colours[i][3]},
-	drawtype = "glasslike",
-	paramtype = "light",
-	sunlight_propagates = true,
-	use_texture_alpha = true,
-	is_ground_content = false,
-	groups = {cracky = 3, oddly_breakable_by_hand = 3},
-	sounds = default.node_sound_glass_defaults(),
-})
+if stairs_mod and stairs and stairs.mod and stairs.mod == "redo" then
+
+	cblocks_stairs("cblocks:glass_" .. colours[i][1], {
+		description = colours[i][2] .. " Glass",
+		tiles = {"cblocks.png^[colorize:" .. colours[i][3]},
+		drawtype = "glasslike",
+		paramtype = "light",
+		sunlight_propagates = true,
+		use_texture_alpha = true,
+		is_ground_content = false,
+		groups = {cracky = 3, oddly_breakable_by_hand = 3},
+		sounds = default.node_sound_glass_defaults(),
+	})
+else
+	minetest.register_node("cblocks:glass_" .. colours[i][1], {
+		description = colours[i][2] .. " Glass",
+		tiles = {"cblocks.png^[colorize:" .. colours[i][3]},
+		drawtype = "glasslike",
+		paramtype = "light",
+		sunlight_propagates = true,
+		use_texture_alpha = true,
+		is_ground_content = false,
+		groups = {cracky = 3, oddly_breakable_by_hand = 3},
+		sounds = default.node_sound_glass_defaults(),
+	})
+end
 
 minetest.register_craft({
 	output = "cblocks:glass_".. colours[i][1] .. " 2",
@@ -133,6 +157,7 @@ minetest.register_craft({
 
 end
 
+
 -- add lucky blocks
 if minetest.get_modpath("lucky_block") then
 lucky_block:add_blocks({
@@ -142,5 +167,6 @@ lucky_block:add_blocks({
 	{"exp"},
 })
 end
+
 
 print ("[MOD] Cblocks loaded")
