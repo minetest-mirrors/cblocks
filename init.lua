@@ -126,7 +126,7 @@ if stairs_mod and stairs and stairs.mod and stairs.mod == "redo" then
 		drawtype = "glasslike",
 		paramtype = "light",
 		sunlight_propagates = true,
-		use_texture_alpha = true,
+		use_texture_alpha = "blend",--true,
 		is_ground_content = false,
 		groups = {cracky = 3, oddly_breakable_by_hand = 3},
 		sounds = default.node_sound_glass_defaults()
