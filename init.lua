@@ -102,7 +102,7 @@ cblocks_stairs("cblocks:stonebrick_" .. colours[i][1], {
 	description = colours[i][2] .. " Stone Brick",
 	tiles = {"default_stone_brick.png^[colorize:" .. colours[i][3]},
 	paramtype = "light",
-	use_texture_alpha = "clip",
+	use_texture_alpha = "opaque",
 	is_ground_content = false,
 	groups = {cracky = 2, stone = 1},
 	sounds = default.node_sound_stone_defaults(),
@@ -126,7 +126,7 @@ if stairs_mod and stairs and stairs.mod and stairs.mod == "redo" then
 		drawtype = "glasslike",
 		paramtype = "light",
 		sunlight_propagates = true,
-		use_texture_alpha = "blend",--true,
+		use_texture_alpha = "blend",
 		is_ground_content = false,
 		groups = {cracky = 3, oddly_breakable_by_hand = 3},
 		sounds = default.node_sound_glass_defaults()
@@ -140,8 +140,7 @@ else
 		drawtype = "glasslike",
 		paramtype = "light",
 		sunlight_propagates = true,
-		--use_texture_alpha = true,
-		use_texture_alpha = "clip",
+		use_texture_alpha = "blend",
 		is_ground_content = false,
 		groups = {cracky = 3, oddly_breakable_by_hand = 3},
 		sounds = default.node_sound_glass_defaults()
@@ -168,7 +167,7 @@ cblocks_stairs("cblocks:wood_" .. col, {
 	description = colours[i][2] .. " Wooden Planks",
 	tiles = {"default_wood.png^[colorize:" .. colours[i][3]},
 	paramtype = "light",
-	use_texture_alpha = "clip",
+	use_texture_alpha = "opaque",
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
 	sounds = default.node_sound_wood_defaults()
