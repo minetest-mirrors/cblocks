@@ -3,7 +3,6 @@ local stairs_mod = minetest.get_modpath("stairs")
 local stairsplus_mod = minetest.global_exists("stairsplus")
 local ethereal_mod = minetest.get_modpath("ethereal")
 
-
 local colours = {
 	{"black",      "Black",      "#000000b0"},
 	{"blue",       "Blue",       "#015dbb70"},
@@ -94,109 +93,109 @@ local function set_alias(col, name)
 end
 
 
-for i = 1, #colours, 1 do
+for i = 1, #colours do
 
--- stone brick
+	-- stone brick
 
-cblocks_stairs("cblocks:stonebrick_" .. colours[i][1], {
-	description = colours[i][2] .. " Stone Brick",
-	tiles = {"default_stone_brick.png^[colorize:" .. colours[i][3]},
-	paramtype = "light",
-	use_texture_alpha = "opaque",
-	is_ground_content = false,
-	groups = {cracky = 2, stone = 1},
-	sounds = default.node_sound_stone_defaults(),
-	paramtype2 = "facedir",
-	on_place = minetest.rotate_node,
-})
-
-minetest.register_craft({
-	output = "cblocks:stonebrick_".. colours[i][1] .. " 2",
-	recipe = {
-		{"default:stonebrick","default:stonebrick", "dye:" .. colours[i][1]}
-	}
-})
-
--- glass (no stairs unless stairs redo active because default stairs mod
--- does not support transparent stairs)
-
-if stairs_mod and stairs and stairs.mod and stairs.mod == "redo" then
-
-	cblocks_stairs("cblocks:glass_" .. colours[i][1], {
-		description = colours[i][2] .. " Glass",
-		tiles = {"cblocks.png^[colorize:" .. colours[i][3]},
-		drawtype = "glasslike",
+	cblocks_stairs("cblocks:stonebrick_" .. colours[i][1], {
+		description = colours[i][2] .. " Stone Brick",
+		tiles = {"default_stone_brick.png^[colorize:" .. colours[i][3]},
 		paramtype = "light",
-		sunlight_propagates = true,
-		use_texture_alpha = "blend",
+		use_texture_alpha = "opaque",
 		is_ground_content = false,
-		groups = {cracky = 3, oddly_breakable_by_hand = 3},
-		sounds = default.node_sound_glass_defaults()
+		groups = {cracky = 2, stone = 1},
+		sounds = default.node_sound_stone_defaults(),
+		paramtype2 = "facedir",
+		on_place = minetest.rotate_node
 	})
 
-	set_alias(colours[i][1], "glass")
-else
-	minetest.register_node("cblocks:glass_" .. colours[i][1], {
-		description = colours[i][2] .. " Glass",
-		tiles = {"cblocks.png^[colorize:" .. colours[i][3]},
-		drawtype = "glasslike",
-		paramtype = "light",
-		sunlight_propagates = true,
-		use_texture_alpha = "blend",
-		is_ground_content = false,
-		groups = {cracky = 3, oddly_breakable_by_hand = 3},
-		sounds = default.node_sound_glass_defaults()
+	minetest.register_craft({
+		output = "cblocks:stonebrick_" .. colours[i][1] .. " 2",
+		recipe = {
+			{"default:stonebrick","default:stonebrick", "dye:" .. colours[i][1]}
+		}
 	})
-end
 
-minetest.register_craft({
-	output = "cblocks:glass_".. colours[i][1] .. " 2",
-	recipe = {
-		{"default:glass","default:glass", "dye:" .. colours[i][1]},
-	}
-})
+	-- glass (no stairs unless stairs redo active because default stairs mod
+	-- does not support transparent stairs)
 
--- wood
+	if stairs_mod and stairs and stairs.mod and stairs.mod == "redo" then
 
-local col = colours[i][1]
+		cblocks_stairs("cblocks:glass_" .. colours[i][1], {
+			description = colours[i][2] .. " Glass",
+			tiles = {"cblocks.png^[colorize:" .. colours[i][3]},
+			drawtype = "glasslike",
+			paramtype = "light",
+			sunlight_propagates = true,
+			use_texture_alpha = "blend",
+			is_ground_content = false,
+			groups = {cracky = 3, oddly_breakable_by_hand = 3},
+			sounds = default.node_sound_glass_defaults()
+		})
 
--- ethereal already has yellow wood so rename to yellow2
-if ethereal_mod and col == "yellow" then
-	col = "yellow2"
-end
+		set_alias(colours[i][1], "glass")
+	else
+		minetest.register_node("cblocks:glass_" .. colours[i][1], {
+			description = colours[i][2] .. " Glass",
+			tiles = {"cblocks.png^[colorize:" .. colours[i][3]},
+			drawtype = "glasslike",
+			paramtype = "light",
+			sunlight_propagates = true,
+			use_texture_alpha = "blend",
+			is_ground_content = false,
+			groups = {cracky = 3, oddly_breakable_by_hand = 3},
+			sounds = default.node_sound_glass_defaults()
+		})
+	end
 
-cblocks_stairs("cblocks:wood_" .. col, {
-	description = colours[i][2] .. " Wooden Planks",
-	tiles = {"default_wood.png^[colorize:" .. colours[i][3]},
-	paramtype = "light",
-	use_texture_alpha = "opaque",
-	is_ground_content = false,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
-	sounds = default.node_sound_wood_defaults(),
-	paramtype2 = "facedir",
-	on_place = minetest.rotate_node,
-})
+	minetest.register_craft({
+		output = "cblocks:glass_".. colours[i][1] .. " 2",
+		recipe = {
+			{"default:glass","default:glass", "dye:" .. colours[i][1]},
+		}
+	})
 
-set_alias(colours[i][1], "wood")
+	-- wood
 
-minetest.register_craft({
-	output = "cblocks:wood_".. col .. " 2",
-	recipe = {
-		{"group:wood","group:wood", "dye:" .. colours[i][1]}
-	}
-})
+	local col = colours[i][1]
 
+	-- ethereal already has yellow wood so rename to yellow2
+	if ethereal_mod and col == "yellow" then
+		col = "yellow2"
+	end
+
+	cblocks_stairs("cblocks:wood_" .. col, {
+		description = colours[i][2] .. " Wooden Planks",
+		tiles = {"default_wood.png^[colorize:" .. colours[i][3]},
+		paramtype = "light",
+		use_texture_alpha = "opaque",
+		is_ground_content = false,
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
+		sounds = default.node_sound_wood_defaults(),
+		paramtype2 = "facedir",
+		on_place = minetest.rotate_node
+	})
+
+	set_alias(colours[i][1], "wood")
+
+	minetest.register_craft({
+		output = "cblocks:wood_" .. col .. " 2",
+		recipe = {
+			{"group:wood","group:wood", "dye:" .. colours[i][1]}
+		}
+	})
 end
 
 
 -- add lucky blocks
 if minetest.get_modpath("lucky_block") then
-lucky_block:add_blocks({
-	{"dro", {"cblocks:wood_"}, 10, true},
-	{"dro", {"cblocks:stonebrick_"}, 10, true},
-	{"dro", {"cblocks:glass_"}, 10, true},
-	{"exp"}
-})
+
+	lucky_block:add_blocks({
+		{"dro", {"cblocks:wood_"}, 10, true},
+		{"dro", {"cblocks:stonebrick_"}, 10, true},
+		{"dro", {"cblocks:glass_"}, 10, true},
+		{"exp"}
+	})
 end
 
 
