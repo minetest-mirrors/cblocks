@@ -106,7 +106,7 @@ for i = 1, #colours do
 		groups = {cracky = 2, stone = 1},
 		sounds = default.node_sound_stone_defaults(),
 		paramtype2 = "facedir",
-		on_place = minetest.rotate_node
+		place_param2 = 0
 	})
 
 	minetest.register_craft({
@@ -173,7 +173,7 @@ for i = 1, #colours do
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
 		sounds = default.node_sound_wood_defaults(),
 		paramtype2 = "facedir",
-		on_place = minetest.rotate_node
+		place_param2 = 0
 	})
 
 	set_alias(colours[i][1], "wood")
