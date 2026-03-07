@@ -163,6 +163,7 @@ for i = 1, #colours do
 
 	stone_def.tiles = {"default_stone_brick.png^[colorize:" .. colours[i][3]}
 	stone_def.description = colours[i][2] .. " Stone Brick"
+	stone_def.use_texture_alpha = "opaque"
 
 	cblocks_stairs("cblocks:stonebrick_" .. colours[i][1], stone_def)
 
@@ -201,6 +202,7 @@ for i = 1, #colours do
 
 	wood_def.tiles = {"default_wood.png^[colorize:" .. colours[i][3]}
 	wood_def.description = colours[i][2] .. " Wooden Planks"
+	wood_def.use_texture_alpha = "opaque"
 
 	local col = colours[i][1]
 
