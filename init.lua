@@ -89,11 +89,12 @@ local function cblocks_stairs(nodename, odef)
 
 		for groupname, value in pairs(def.groups) do
 
-			if groupname ~= "cracky"
-			and groupname ~= "choppy"
-			and groupname ~="flammable"
-			and groupname ~="crumbly"
-			and groupname ~="snappy" then
+			if groupname ~= "cracky" and groupname ~= "pickaxey"
+			and groupname ~= "choppy" and groupname ~= "axey"
+			and groupname ~="crumbly" and groupname ~= "shovely"
+			and groupname ~="snappy" and groupname ~= "swordy"
+			and groupname ~= "oddly_breakable_by_hand" and groupname ~= "handy"
+			and groupname ~="flammable" then
 				def.groups.groupname = nil
 			end
 		end
@@ -193,28 +194,6 @@ for i = 1, #colours do
 		})
 	end
 
-	-- actual brick
-
-	if not disable_brick then
-
-		local brick_nod = mod_mcl_core and "mcl_core:brick_block" or "default:brick"
-		local brick_def = table.copy(core.registered_nodes[brick_nod])
-
-		brick_def.tiles = mod_mcl_core and {"default_brick.png" .. colorize} or
-				{"default_brick.png" .. colorize .. "^[transformFX",
-				"default_brick.png" .. colorize}
-		brick_def.description = colours[i][2] .. " Brick Block"
-
-		cblocks_stairs("cblocks:brick_" .. colours[i][1], brick_def)
-
-		core.register_craft({
-			output = "cblocks:brick_" .. colours[i][1] .. " 2",
-			recipe = {
-				{brick_nod, brick_nod, dye_mod .. colours[i][1]}
-			}
-		})
-	end
-
 	-- glass
 
 	if not disable_glass then
@@ -265,6 +244,31 @@ for i = 1, #colours do
 			output = "cblocks:wood_" .. col .. " 2",
 			recipe = {
 				{wood_nod, wood_nod, dye_mod .. colours[i][1]}
+			}
+		})
+	end
+
+	-- actual brick
+
+	if not disable_brick then
+
+		-- for bricks we make texture grey then colorize it
+		colorize = "^[colorizehsl:0,0,50^[colorize:" .. colours[i][3]
+
+		local brick_nod = mod_mcl_core and "mcl_core:brick_block" or "default:brick"
+		local brick_def = table.copy(core.registered_nodes[brick_nod])
+
+		brick_def.tiles = mod_mcl_core and {"default_brick.png" .. colorize} or
+				{"default_brick.png" .. colorize .. "^[transformFX",
+				"default_brick.png" .. colorize}
+		brick_def.description = colours[i][2] .. " Brick Block"
+
+		cblocks_stairs("cblocks:brick_" .. colours[i][1], brick_def)
+
+		core.register_craft({
+			output = "cblocks:brick_" .. colours[i][1] .. " 2",
+			recipe = {
+				{brick_nod, brick_nod, dye_mod .. colours[i][1]}
 			}
 		})
 	end
