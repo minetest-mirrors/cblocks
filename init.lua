@@ -244,7 +244,7 @@ for i = 1, #colours do
 
 		cb_add("cblocks:wood_" .. col, wood_def, disable_wood_stairs)
 
-		set_alias(colours[i][1], "wood")
+		set_alias(colours[i][1], "wood") ; wood_nod = "group:wood"
 
 		core.register_craft({
 			output = "cblocks:wood_" .. col .. " 2",
